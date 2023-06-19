@@ -1,18 +1,17 @@
 const parseArgs = () => {
-  const argPrefix = /^--/;
+  const argPrefix = '--';
   const args = process.argv.slice(2);
+  const parsedArgs = [];
 
-  while (args.length) {
-    const currentArg = args.shift();
+  args.forEach((currentArg, idx) => {
     let currentValue;
-
-    if (argPrefix.test(currentArg)) {
-      if (!argPrefix.test(args[0])) {
-        currentValue = args.shift();
-      }
-      console.log(`${currentArg.replace(argPrefix, '')} is ${currentValue};`);
+    if (currentArg.startsWith(argPrefix)) {
+      if (!args[idx + 1].startsWith(argPrefix)) currentValue = args[idx + 1];
+      parsedArgs.push(`${currentArg.slice(2)} is ${currentValue}`);
     }
-  }
+  });
+
+  console.log(parsedArgs.join(', '));
 };
 
 parseArgs();
