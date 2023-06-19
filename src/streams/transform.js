@@ -1,9 +1,10 @@
 import { Transform } from 'stream';
+import { EOL } from 'os';
 
 const transform = async () => {
   const reverseTransform = new Transform({
     transform(chunk, encoding, callback) {
-      callback(null, chunk.toString().split('').reverse().join('') + '\n');
+      callback(null, chunk.toString().replace(EOL, '').split('').reverse().join('') + EOL);
     },
   });
 
